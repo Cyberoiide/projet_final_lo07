@@ -7,6 +7,7 @@ require('../controller/ControllerRecolte.php');
 require('../controller/ControllerFamille.php');
 require('../controller/ControllerEvenement.php');
 require('../controller/ControllerLien.php');
+require('../controller/ControllerIndividu.php');
 
 // --- récupération de l'action passée dans l'URL
 $query_string = $_SERVER['QUERY_STRING'];
@@ -42,10 +43,18 @@ switch ($action) {
   case "evenementCreated":
     ControllerEvenement::$action($args);
     break;
-  
+
   case "lienReadAll":
   case "lienParentCreate":
     ControllerLien::$action($args);
+    break;
+
+  case "individuReadAll":
+  case "individuCreate":
+  case "individuCreated":
+  case "individuSelection":
+  case "individuAffichage":
+    ControllerIndividu::$action($args);
     break;
 
   case 'CavePropAmelioration':
