@@ -25,6 +25,40 @@ class ControllerLien
         $vue = $root . '/app/view/lien/viewParentInsert.php';
         require($vue);
     }
+
+    public static function lienParentCreated() {      
+        $parent = ModelLien::insertParent(htmlspecialchars($_GET['ids_enfant'])
+                ,htmlspecialchars($_GET['ids_parent']));
+       
+    // ----- Construction chemin de la vue
+    include 'config.php';
+    $vue = $root . '/app/view/lien/viewParentInserted.php';
+    require ($vue);
+}
+
+public static function lienUnionCreate() {
+       //récupération des individus
+       $results = ModelLien::getAllIndividu();
+       // ----- Construction chemin de la vue du formulaire d'ajout
+       include 'config.php';
+       $vue = $root . '/app/view/lien/viewUnionInsert.php';
+       require ($vue);
+   }
+   
+public static function lienUnionCreated() {      
+        $results = ModelLien::insertUnion(htmlspecialchars($_GET['id_homme']),
+                htmlspecialchars($_GET['id_femme']),htmlspecialchars($_GET['type'])
+                ,htmlspecialchars($_GET['date']),htmlspecialchars($_GET['lieu']));
+       
+    // ----- Construction chemin de la vue
+    include 'config.php';
+    $vue = $root . '/app/view/lien/viewUnionInserted.php';
+    require ($vue);
+}
+
+
+   
+   
 }
 
 ?>

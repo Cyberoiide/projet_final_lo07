@@ -13,6 +13,7 @@ class ControllerFamille
         $results = ModelFamille::getAll();
         // ----- Construction chemin de la vue
         include 'config.php';
+        $_SESSION['titre']="Pas de famille sélectionnée";
         $vue = $root . '/app/view/famille/viewAll.php';
         if (DEBUG)
             echo ("ControllerFamille : familleReadAll : vue = $vue");
@@ -24,7 +25,8 @@ class ControllerFamille
     {
         $famille_nom = $_GET['nom'];
         $results = ModelFamille::getOne($famille_nom);
-
+        $_SESSION['titre']=$_GET['nom'];
+        $_SESSION['famille_id']=$results[0]->getId();
         // ----- Construction chemin de la vue
         include 'config.php';
         $vue = $root . '/app/view/famille/viewConfirmNom.php';
@@ -43,7 +45,7 @@ class ControllerFamille
 
     // Affiche le formulaire de creation d'un famille
     public static function familleCreate()
-    {
+    {   $_SESSION['titre']="Pas de famille sélectionnée";
         // ----- Construction chemin de la vue
         include 'config.php';
         $vue = $root . '/app/view/famille/viewInsert.php';
@@ -58,11 +60,11 @@ class ControllerFamille
         $results = ModelFamille::insert(
             htmlspecialchars($_GET['nom']),
         );
+        $_SESSION['titre']=$_GET['nom'];
         // ----- Construction chemin de la vue
         include 'config.php';
         $vue = $root . '/app/view/famille/viewInserted.php';
         require($vue);
-
     }
 
 

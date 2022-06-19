@@ -61,19 +61,14 @@ class ControllerIndividu
         require($vue);
     }
 
-    public static function individuAffichage()
+    public static function individuAffichage($arg)
     {
-        $ids = explode('|', $_GET['ids']);
-        $famille_id = $ids[1];
-        $individu_id = $ids[0];
-
-        $results = ModelIndividu::getInfoIndividu(
-            $famille_id,
-            $individu_id,
-        );
-        // ----- Construction chemin de la vue
+        //Demande de toutes les infos sur l'individu
+        $results = ModelIndividu::getInfoIndividu($arg['individu_id']);
+        
+        //Construction de la vue page d'un individu
         include 'config.php';
-        $vue = $root . '/app/view/evenement/viewInserted.php';
+        $vue = $root . '/app/view/individu/viewPage.php';
         require($vue);
     }
 }

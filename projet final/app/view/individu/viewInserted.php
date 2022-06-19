@@ -1,6 +1,6 @@
 <!-- ----- début viewInserted -->
 <?php
-session_start();
+
 
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
@@ -21,8 +21,8 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
     if ($results) {
       echo ("<h3>Confirmation de la création d'un évènement </h3>");
       echo ("<ul>");
-      echo ("<li>famille_id = " . $results[0] . "</li>");
-      echo ("<li>individu_id = " . $results[1] . "</li>");
+      echo ("<li>famille_id = " . $_SESSION['famille_id'] . "</li>");
+      echo ("<li>individu_id = " . $results . "</li>");
       echo ("<li>nom = " . $_GET["nom"] . "</li>");
       echo ("<li>prenom = " . $_GET["prenom"] . "</li>");
       echo ("<li>sexe = " . $_GET["sexe"] . "</li>");

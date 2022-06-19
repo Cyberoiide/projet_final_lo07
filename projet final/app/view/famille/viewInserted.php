@@ -1,6 +1,6 @@
 <!-- ----- début viewInserted -->
 <?php
-session_start();
+
 
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
@@ -9,7 +9,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
   <div class="container">
     <?php
 
-    $_SESSION['nom'] = $_GET['nom'];
+    // $_SESSION['nom'] = $_GET['nom'];
 
     include $root . '/app/view/fragment/fragmentCaveMenu.html';
     include $root . '/app/view/fragment/fragmentCaveJumbotron.php';

@@ -100,9 +100,9 @@ class ModelIndividu
         try {
             $database = Model::getInstance();
 
-            $query = "SELECT * from individu where id > 0";
+            $query = "SELECT * FROM individu WHERE id!=0 and famille_id=:famille_id";
             $statement = $database->prepare($query);
-            $statement->execute();
+            $statement->execute(['famille_id' => $_SESSION['famille_id']]);
 
             // noms des attributs
             $colcount = $statement->columnCount();
@@ -125,10 +125,10 @@ class ModelIndividu
     {
         try {
             $database = Model::getInstance();
-            $query_individu = "SELECT * from individu where id > 0";
+            $query_individu = "SELECT * from individu where id > 0 and famille_id=:famille_id";
 
             $statement = $database->prepare($query_individu);
-            $statement->execute();
+            $statement->execute(['famille_id' => $_SESSION['famille_id']]);
             $datas_individu = $statement->fetchAll(PDO::FETCH_ASSOC);
 
             return array($datas_individu);
@@ -145,8 +145,9 @@ class ModelIndividu
             $database = Model::getInstance();
 
             // recherche de la valeur de la clé = max(id) + 1
-            $query = "select max(id) from individu";
-            $statement = $database->query($query);
+            $query = "select max(id) from individu where famille_id=:famille_id";
+            $statement = $database->prepare($query);
+            $statement->execute(['famille_id' => $_SESSION['famille_id']]);
             $tuple = $statement->fetch();
             $id = $tuple['0'];
             $id++;
@@ -163,41 +164,19 @@ class ModelIndividu
             // }
 
             // quel est le famille_id du nom de la personne renseignée ?
-            $statement = $database->prepare("SELECT famille_id from individu where nom = :nom");
+            // ajout d'un nouveau tuple individu
+            $query = "insert into individu value (:famille_id, :id, :nom, :prenom, :sexe, 0, 0)";
+            $statement = $database->prepare($query);
             $statement->execute([
+                'famille_id' => $_SESSION['famille_id'],
+                'id' => $id,
                 'nom' => $nom,
+                'prenom' => $prenom,
+                'sexe' => $sexe
             ]);
+            return $id;
 
-
-            if ($statement->rowCount() > 0) { // si la famille existe, ajouter l'individu dedans 
-
-                $tuple2 = $statement->fetch();
-                $famille_id = $tuple2['0'];
-
-                $query = "INSERT into individu values (:famille_id, :id, :nom, :prenom, :sexe, 0, 0)";
-                $new_statement = $database->prepare($query);
-                $new_statement->execute([
-                    'famille_id' => $famille_id,
-                    'id' => $id,
-                    'nom' => $nom,
-                    'prenom' => $prenom,
-                    'sexe' => $sexe
-                ]);
-            } else { // sinon, il faut créer la famille et ajouter l'individu dedans
-
-                $famille_id = ModelFamille::insert($nom);
-                $query = "INSERT into individu values (:famille_id, :id, :nom, :prenom, :sexe, 0, 0)";
-                $new_statement = $database->prepare($query);
-                $new_statement->execute([
-                    'famille_id' => $famille_id,
-                    'id' => $id,
-                    'nom' => $nom,
-                    'prenom' => $prenom,
-                    'sexe' => $sexe
-                ]);
-            }
-
-            return array($famille_id, $id);
+            return array($id);
         } catch (PDOException $e) {
             printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
             return -1;
@@ -238,46 +217,135 @@ class ModelIndividu
         }
     }
 
-    public static function getInfoIndividu($famille_id, $individu_id)
+    public static function getInfoIndividu($id)
     {
         try {
-            $info_individu=[]; // création du tableau 
+            // - Création du array de toutes les infos présentes dans l'affichage
+            $infos = [];
             $database = Model::getInstance();
-
-            // récupérations de toutes les infos sur la personne de la base de donnée individu
-            $query = "SELECT * from individu where famille_id = :famille_id and id=:id";
+            
+            //Récupération des infos de l'individu
+            $query = "select * from individu where id=:id and famille_id=:famille_id";
             $statement = $database->prepare($query);
             $statement->execute([
-                'famille_id' => $famille_id,
-                'id' => $individu_id
+                'id' => $id,
+                'famille_id' => $_SESSION['famille_id']
             ]);
             $results = $statement->fetchAll();
-            $info_individu['individu'] = $results[0]; // maintenant, on a un tableau avec une dimension en plus "individu" où on va pouvoir retrouver par la suite toutes les variables de la table individu
-
+            $infos['individu'] = $results[0];
             
-            // récupérations des parents de l'individu
-
-            // on commence par le père
-            $query = "SELECT * from individu where id=:id";
+            
+             //Ajout des noms et prénoms des parents
+            //Père :
+            $query = "select nom,prenom from individu where id=:id and famille_id=:famille_id";
             $statement = $database->prepare($query);
             $statement->execute([
-                'id' => $info_individu['individu']['pere']
+                'id' => $infos['individu']['pere'],
+                'famille_id' => $_SESSION['famille_id']
             ]);
             $results = $statement->fetchAll();
             $infos['individu']['pere_nom'] = $results[0]['nom'];
             $infos['individu']['pere_prenom'] = $results[0]['prenom'];
-            
-            //puis pour la mère :
-            $query = "select * from individu where id=:id";
+            //Mère :
+            $query = "select nom,prenom from individu where id=:id and famille_id=:famille_id";
             $statement = $database->prepare($query);
             $statement->execute([
                 'id' => $infos['individu']['mere'],
+                'famille_id' => $_SESSION['famille_id']
             ]);
             $results = $statement->fetchAll();
             $infos['individu']['mere_nom'] = $results[0]['nom'];
             $infos['individu']['mere_prenom'] = $results[0]['prenom'];
-
-            return $info_individu;
+            
+            
+             //Récupération des évènement
+            //Naissance 
+            $query = "select event_date,event_lieu from evenement where event_type='NAISSANCE' and iid=:id and famille_id=:famille_id";
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'id' => $id,
+                'famille_id' => $_SESSION['famille_id']
+            ]);
+            $results = $statement->fetchAll();
+            if (empty($results[0]['event_date']))
+                $infos['evenement']['NAISSANCE']['event_date'] = '?';
+            else
+                $infos['evenement']['NAISSANCE']['event_date'] = $results[0]['event_date'];
+            if (empty($results[0]['event_lieu']))
+                $infos['evenement']['NAISSANCE']['event_lieu'] = '?';
+            else
+                $infos['evenement']['NAISSANCE']['event_lieu'] = $results[0]['event_lieu'];
+                
+            //Déces
+            $query = "select event_date,event_lieu from evenement where event_type='DECES' and iid=:id and famille_id=:famille_id";
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'id' => $id,
+                'famille_id' => $_SESSION['famille_id']
+            ]);
+            $results = $statement->fetchAll();
+            if (empty($results[0]['event_date']))
+                $infos['evenement']['DECES']['event_date'] = '?';
+            else
+                $infos['evenement']['DECES']['event_date'] = $results[0]['event_date'];
+            if (empty($results[0]['event_lieu']))
+                $infos['evenement']['DECES']['event_lieu'] = '?';
+            else
+                $infos['evenement']['DECES']['event_lieu'] = $results[0]['event_lieu'];
+            
+            
+            //Récupération des unions et des enfants
+            $query = "SELECT iid1,iid2,lien_type from lien where (iid1=:id or iid2=:id) and famille_id=:famille_id";
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'id' => $id,
+                'famille_id' => $_SESSION['famille_id']
+            ]);
+            $results = $statement->fetchAll();
+            $infos['union'] = [];
+            //Récupération des enfants
+            $i=0;
+            foreach ($results as $element) {
+                $infos['union'][$i] = [];
+                if ($element['iid1']==$id)
+                    $infos['union'][$i]['id'] = $element['iid2'];
+                else
+                    $infos['union'][$i]['id'] = $element['iid1'];
+                //Recherche du nom et prénom la personne de l'union
+                $query = "select nom,prenom from individu where id=:id and famille_id=:famille_id";
+                $statement = $database->prepare($query);
+                $statement->execute([
+                    'id' => $infos['union'][$i]['id'],
+                    'famille_id' => $_SESSION['famille_id']
+                ]);
+                $results = $statement->fetchAll();
+                $infos['union'][$i]['nom'] = $results[0]['nom'];
+                $infos['union'][$i]['prenom'] = $results[0]['prenom'];
+                
+                //Recherche enfants
+                $query = "select id,nom,prenom from individu where pere=:id and mere=:id2 and famille_id=:famille_id";
+                $statement = $database->prepare($query);
+                if ($infos['individu']['sexe']=='H'){
+                    $statement->execute([
+                    'id2' => $infos['union'][$i]['id'],
+                    'id' => $id,
+                    'famille_id' => $_SESSION['famille_id']
+                ]);
+                }else{
+                    $statement->execute([
+                    'id2' => $id,
+                    'id' => $infos['union'][$i]['id'],
+                    'famille_id' => $_SESSION['famille_id']
+                ]);
+                }
+                $results = $statement->fetchAll();
+                $infos['union'][$i]['enfants'] = $results;
+                $i++;
+            }
+            
+            
+            
+            return $infos;
         } catch (PDOException $e) {
             printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
             return NULL;

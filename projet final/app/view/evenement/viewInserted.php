@@ -1,6 +1,6 @@
 <!-- ----- début viewInserted -->
 <?php
-session_start();
+
 
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
@@ -15,7 +15,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
     <!-- ===================================================== -->
     <?php
     var_dump($_GET);
-    // var_dump($_SESSION);
+    var_dump($_SESSION);
 
     // ici results = event_id (juste id quoi)
     if ($results) {

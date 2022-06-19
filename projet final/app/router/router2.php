@@ -1,5 +1,8 @@
 <!-- ----- debut Router1 -->
 <?php
+
+if (empty($_SESSION['titre']))
+    session_start();
 require('../controller/ControllerVin.php');
 require('../controller/ControllerProducteur.php');
 require('../controller/ControllerCave.php');
@@ -46,6 +49,9 @@ switch ($action) {
 
   case "lienReadAll":
   case "lienParentCreate":
+  case "lienParentCreated":
+  case "lienUnionCreate":
+  case "lienUnionCreated":
     ControllerLien::$action($args);
     break;
 

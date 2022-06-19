@@ -102,9 +102,9 @@ class ModelLien
         try {
             $database = Model::getInstance();
 
-            $query = "select * from lien";
+            $query = "select * from lien WHERE famille_id=:famille_id";
             $statement = $database->prepare($query);
-            $statement->execute();
+            $statement->execute(['famille_id' => $_SESSION['famille_id']]);
 
             // noms des attributs
             $colcount = $statement->columnCount();
@@ -128,16 +128,77 @@ class ModelLien
     {
         try {
             $database = Model::getInstance();
-            $query_individu = "select * from individu";
-
-            $statement = $database->prepare($query_individu);
-            $statement->execute();
-            $datas_individu = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            return array($datas_individu);
+            $query = "SELECT * FROM `individu` WHERE id!=0 and famille_id=:famille_id";
+            $statement = $database->prepare($query);
+            $statement->execute(['famille_id' => $_SESSION['famille_id']]);
+            $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelIndividu");
+            return $results;
         } catch (PDOException $e) {
             printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
             return NULL;
+        }
+    }
+
+
+    public static function insertParent($id_enfant,$id_parent) {
+        try {
+            $database = Model::getInstance();
+
+            // recherche du sexe du parent
+            $query = "select sexe from individu where famille_id = :famille_id and id=:id_parent";
+            $statement = $database->prepare($query);
+            $statement->execute(['id_parent' => $id_parent, 'famille_id' => $_SESSION['famille_id']]);
+            $results = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
+            $sexe = $results[0];
+            // update du lien de parenté pour l'enfant selon le sexe du parent
+            if ($sexe=='H'){
+                $query = "UPDATE individu SET pere = :id_parent WHERE famille_id = :famille_id AND id = :id_enfant;";
+                $parent = 'pere';
+            }
+            else{
+                $query = "UPDATE individu SET mere = :id_parent WHERE famille_id = :famille_id AND id = :id_enfant;";
+                $parent = 'mere';
+            }            
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'id_parent' => $id_parent,
+                'famille_id' => $_SESSION['famille_id'],
+                'id_enfant' => $id_enfant           
+            ]);
+            return $parent;
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return -1;
+        }
+    }
+    
+    public static function insertUnion($id_homme,$id_femme, $event_type, $event_date, $event_lieu) {
+        try {
+            $database = Model::getInstance();
+
+            // recherche de la valeur de la clé = max(id) + 1
+            $query = "select max(id) from lien";
+            $statement = $database->query($query);
+            $tuple = $statement->fetch();
+            $id = $tuple['0'];
+            $id++;
+
+            // ajout d'un nouveau tuple évènement;
+            $query = "insert into lien value (:famille_id, :id, :iid1, :iid2, :event_type, :event_date, :event_lieu)";
+            $statement = $database->prepare($query);
+            $statement->execute([
+                'famille_id' => $_SESSION['famille_id'],
+                'id' => $id,
+                'iid1' => $id_homme,
+                'iid2' => $id_femme,
+                'event_type' => $event_type,
+                'event_date' => $event_date,
+                'event_lieu' => $event_lieu              
+            ]);
+            return $id;
+        } catch (PDOException $e) {
+            printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
+            return -1;
         }
     }
 }

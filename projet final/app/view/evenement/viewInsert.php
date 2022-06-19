@@ -1,7 +1,7 @@
 <!-- ----- début viewInsert -->
 
 <?php
-session_start();
+
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
 
@@ -17,7 +17,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
         $datas_individu = $results[0];
         var_dump($datas_individu);
-        $datas_event = $results[1];
+        //$datas_event = $results[1];
     // /*     var_dump($datas_event); */
         ?>
 
@@ -32,7 +32,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un individu -->
                 <label for="individu_id">Sélection d'un individu : </label>
-                <select class="form-control" id='individu_id' name='ids' style="width: 200px">
+                <select class="form-control" id='individu_id' name='ids' style="width: 400px">
                     <?php
 
                     foreach ($datas_individu as $individu) {
@@ -51,7 +51,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un type d'event -->
                 <label for="event_type">Sélection un type d'évènement : </label>
-                <select class="form-control" id='"event_type' name='event_type' style="width: 200px">
+                <select class="form-control" id='"event_type' name='event_type' style="width: 400px">
                     <option value="NAISSANCE">NAISSANCE</option>
                     <option value="DECES">DECES</option>
                 </select>

@@ -1,6 +1,6 @@
 <!-- ----- début viewInserted -->
 <?php
-session_start();
+
 
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>

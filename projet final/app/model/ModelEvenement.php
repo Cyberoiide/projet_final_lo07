@@ -92,9 +92,11 @@ class ModelEvenement
         try {
             $database = Model::getInstance();
 
-            $query = "select * from evenement";
+            $query = "SELECT * from evenement where famille_id=:famille_id";
             $statement = $database->prepare($query);
-            $statement->execute();
+            $statement->execute([
+                'famille_id' => $_SESSION['famille_id']
+            ]);
 
             // noms des attributs
             $colcount = $statement->columnCount();
@@ -119,19 +121,21 @@ class ModelEvenement
     {
         try {
             $database = Model::getInstance();
-            $query_individu = "select famille_id, id, nom, prenom from individu";
-            $query_event = "select event_type, event_date, event_lieu from evenement";
+            $query_individu = "SELECT * FROM `individu` WHERE id!=0 and famille_id=:famille_id";
+            //$query_event = "select event_type, event_date, event_lieu from evenement";
 
             $statement = $database->prepare($query_individu);
-            $statement->execute();
+            $statement->execute([
+                'famille_id' => $_SESSION['famille_id']
+            ]);
             $datas_individu = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-            $statement1 = $database->prepare($query_event);
-            $statement1->execute();
+            //$statement1 = $database->prepare($query_event);
+            //$statement1->execute();
 
-            $datas_event = $statement1->fetchAll(PDO::FETCH_ASSOC);
+            //$datas_event = $statement1->fetchAll(PDO::FETCH_ASSOC);
 
-            return array($datas_individu, $datas_event);
+            return array($datas_individu);
         } catch (PDOException $e) {
             printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
             return NULL;
@@ -140,13 +144,13 @@ class ModelEvenement
 
 
     // pour insérer un nouvel event
-    public static function insert($famille_id, $iid, $event_type, $event_date, $event_lieu)
+    public static function insert($iid, $event_type, $event_date, $event_lieu)
     {
         try {
             $database = Model::getInstance();
 
             // recherche de la valeur de la clé = max(id) + 1
-            $query = "select max(id) from evenement";
+            $query = "SELECT max(id) from evenement";
             $statement = $database->query($query);
             $tuple = $statement->fetch();
             $id = $tuple['0'];
@@ -155,12 +159,12 @@ class ModelEvenement
             // recherche de la valeur de famille_id associé à iid
             // $results = ModelIndividu::getFamille($nom);
             // $famille_id = $results['famille_id'];
-
+                            
             // ajout d'un nouveau tuple;
             $query = "insert into evenement value (:famille_id, :id, :iid, :event_type, :event_date, :event_lieu)";
             $statement = $database->prepare($query);
             $statement->execute([
-                'famille_id' => $famille_id,
+                'famille_id' => $_SESSION['famille_id'],
                 'id' => $id,
                 'iid' => $iid,
                 'event_type' => $event_type,
@@ -184,6 +188,7 @@ class ModelEvenement
             $query = "select * from evenement where id = :id";
             $statement = $database->prepare($query);
             $statement->execute([
+                'famille_id' => $_SESSION['famille_id'],
                 'id' => $id
             ]);
             $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelEvenement");

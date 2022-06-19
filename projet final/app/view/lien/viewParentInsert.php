@@ -26,12 +26,12 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
             <div class="form-group">
 
                 <!-- hidden value pour appeler la méthode lienParentCreated par le routeur  -->
-                <input type="hidden" name='action' value='viewParentCreated'>
+                <input type="hidden" name='action' value='lienParentCreated'>
 
 
                 <!-- selection d'un enfant -->
                 <label for="individu_id">Sélection d'un enfant : </label>
-                <select class="form-control" id='individu_id' name='ids_enfant' style="width: 200px">
+                <select class="form-control" id='individu_id' name='ids_enfant' style="width: 400px">
                     <?php
 
                     foreach ($datas_individu as $enfant) {
@@ -46,7 +46,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un parent -->
                 <label for="individu_id">Sélection d'un parent : </label>
-                <select class="form-control" id='individu_id' name='ids_parent' style="width: 200px">
+                <select class="form-control" id='individu_id' name='ids_parent' style="width: 400px">
                     <?php
                     foreach ($datas_individu as $parent) {
                         // on passe 2 paramètres dans le value de option

@@ -1,7 +1,7 @@
 <!-- ----- début viewAll -->
 <?php
 
-session_start();
+
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
 
@@ -14,7 +14,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
     <?php
 
-    // var_dump($results);
+    var_dump($results);
 
     // on affiche ici les noms des colonnes
     $cols = $results[0];
@@ -37,14 +37,16 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
     $datas = $results[1];
     // var_dump($datas);
 
-    foreach ($datas as $infos) {
-      echo ("<tr>");
-      foreach ($cols as $element) {
-        echo ("<td>");
-        echo ($infos[$element]);
-        echo ("</td>");
+    if (isset($datas)) {
+      foreach ($datas as $infos) {
+        echo ("<tr>");
+        foreach ($cols as $element) {
+          echo ("<td>");
+          echo ($infos[$element]);
+          echo ("</td>");
+        }
+        echo ("</tr>");
       }
-      echo ("</tr>");
     }
     echo ("</table>");
 
