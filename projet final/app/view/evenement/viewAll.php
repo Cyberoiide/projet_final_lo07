@@ -1,7 +1,5 @@
 <!-- ----- début viewAll -->
 <?php
-
-
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
 
@@ -47,6 +45,8 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
         }
         echo ("</tr>");
       }
+    } else {
+      echo "pas d'évènement pour cette famille";
     }
     echo ("</table>");
 

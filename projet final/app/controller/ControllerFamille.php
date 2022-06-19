@@ -13,7 +13,7 @@ class ControllerFamille
         $results = ModelFamille::getAll();
         // ----- Construction chemin de la vue
         include 'config.php';
-        $_SESSION['titre']="Pas de famille sélectionnée";
+        // $_SESSION['titre']="Pas de famille sélectionnée";
         $vue = $root . '/app/view/famille/viewAll.php';
         if (DEBUG)
             echo ("ControllerFamille : familleReadAll : vue = $vue");

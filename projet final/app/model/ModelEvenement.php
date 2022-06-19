@@ -155,11 +155,7 @@ class ModelEvenement
             $tuple = $statement->fetch();
             $id = $tuple['0'];
             $id++;
-
-            // recherche de la valeur de famille_id associé à iid
-            // $results = ModelIndividu::getFamille($nom);
-            // $famille_id = $results['famille_id'];
-                            
+                           
             // ajout d'un nouveau tuple;
             $query = "insert into evenement value (:famille_id, :id, :iid, :event_type, :event_date, :event_lieu)";
             $statement = $database->prepare($query);

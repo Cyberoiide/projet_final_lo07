@@ -10,6 +10,8 @@ require ($root . '/app/view/fragment/fragmentCaveHeader.html');
     <?php
       include $root . '/app/view/fragment/fragmentCaveMenu.html';
       include $root . '/app/view/fragment/fragmentCaveJumbotron.php';
+
+      // var_dump($results);
     ?> 
 
     <form role="form" method='get' action='router2.php'>
@@ -19,9 +21,9 @@ require ($root . '/app/view/fragment/fragmentCaveHeader.html');
         <!-- Champs pour le choix de l'homme -->  
         <label for="id_homme">Sélectionnez un homme : </label><select class="form-control" id="id_homme" name="id_homme">
             <?PHP
-            foreach ($results as $element){
-                if ($element->getSexe()=='H')
-                    echo "<option value=".$element->getId().">".$element->getNom()." : ".$element->getPrenom()."</option>";
+            foreach ($results as $individu){
+                if ($individu['sexe']=='H')
+                    echo "<option value=" . $individu['id'] . ">" . $individu['nom'] . " : " . $individu['prenom'] . "</option>";
             }
             ?>
         </select><br>
@@ -29,10 +31,10 @@ require ($root . '/app/view/fragment/fragmentCaveHeader.html');
         <!-- Champs pour le choix de la femme -->  
         <label for="id_femme">Sélectionnez une femme : </label><select class="form-control" id="id_femme" name="id_femme">
             <?PHP
-            foreach ($results as $element){
-                if ($element->getSexe()=='F')
-                    echo "<option value=".$element->getId().">".$element->getNom()." : ".$element->getPrenom()."</option>";
-            }
+            foreach ($results as $individu){
+                if ($individu['sexe']=='F')
+                echo "<option value=" . $individu['id'] . ">" . $individu['nom'] . " : " . $individu['prenom'] . "</option>";
+              }
             ?>
         </select><br>
         

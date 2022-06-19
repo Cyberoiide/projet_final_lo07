@@ -1,7 +1,6 @@
 <!-- ----- début viewInsert -->
 
 <?php
-session_start();
 require($root . '/app/view/fragment/fragmentCaveHeader.html');
 ?>
 
@@ -13,11 +12,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
         ?>
 
         <?php
-        // var_dump($results);
-
-        $datas_individu = $results[0];
-        var_dump($datas_individu);
-        // /*     var_dump($datas_event); */
+        var_dump($results);
         ?>
 
 
@@ -31,12 +26,12 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un enfant -->
                 <label for="individu_id">Sélection d'un enfant : </label>
-                <select class="form-control" id='individu_id' name='ids_enfant' style="width: 400px">
+                <select class="form-control" id='individu_id' name='id_enfant' style="width: 400px">
                     <?php
 
-                    foreach ($datas_individu as $enfant) {
+                    foreach ($results as $enfant) {
                         // on passe 2 paramètres dans le value de option
-                        echo ("<option value=" .  $enfant['id'] . "|" . $enfant["famille_id"] . ">" .  $enfant['nom'] . " : " . $enfant['prenom'] . "</option>");
+                        echo ("<option value=" .  $enfant['id'] . ">" .  $enfant['nom'] . " : " . $enfant['prenom'] . "</option>");
                     }
 
                     ?>
@@ -46,11 +41,11 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un parent -->
                 <label for="individu_id">Sélection d'un parent : </label>
-                <select class="form-control" id='individu_id' name='ids_parent' style="width: 400px">
+                <select class="form-control" id='individu_id' name='id_parent' style="width: 400px">
                     <?php
-                    foreach ($datas_individu as $parent) {
+                    foreach ($results as $parent) {
                         // on passe 2 paramètres dans le value de option
-                        echo ("<option value=" .  $parent['id'] . "|" . $parent["famille_id"] . "|" . $parent['sexe'] . ">" .  $parent['nom'] . " : " . $parent['prenom'] . "</option>");
+                        echo ("<option value=" .  $parent['id'] . ">" .  $parent['nom'] . " : " . $parent['prenom'] . "</option>");
                     }
                     ?>
                 </select>

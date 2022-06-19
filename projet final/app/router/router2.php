@@ -1,12 +1,9 @@
 <!-- ----- debut Router1 -->
 <?php
 
-if (empty($_SESSION['titre']))
+if (empty($_SESSION['nom']))
     session_start();
-require('../controller/ControllerVin.php');
-require('../controller/ControllerProducteur.php');
 require('../controller/ControllerCave.php');
-require('../controller/ControllerRecolte.php');
 require('../controller/ControllerFamille.php');
 require('../controller/ControllerEvenement.php');
 require('../controller/ControllerLien.php');

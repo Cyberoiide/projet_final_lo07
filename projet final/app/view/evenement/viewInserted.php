@@ -21,7 +21,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
     if ($results) {
       echo ("<h3>Confirmation de la création d'un évènement </h3>");
       echo ("<ul>");
-      echo ("<li>famille_id = " . $famille_id . "</li>");
+      echo ("<li>famille_id = " . $_SESSION['famille_id'] . "</li>");
       echo ("<li>individu_id = " . $iid . "</li>");
       echo ("<li>event_id = " . $results . "</li>");
       echo ("<li>event_type = " . $_GET["event_type"] . "</li>");

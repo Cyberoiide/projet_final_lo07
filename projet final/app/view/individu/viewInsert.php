@@ -28,7 +28,7 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <label for="id">sexe : </label> <br>
 
-                <input type="radio" id="masculin" name="sexe" value="M">
+                <input type="radio" id="masculin" name="sexe" value="H">
                 <label for="masculin">masculin</label>
 
                 <input type="radio" id="feminin" name="sexe" value="F">

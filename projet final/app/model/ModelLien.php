@@ -102,7 +102,7 @@ class ModelLien
         try {
             $database = Model::getInstance();
 
-            $query = "select * from lien WHERE famille_id=:famille_id";
+            $query = "SELECT * from lien WHERE famille_id=:famille_id";
             $statement = $database->prepare($query);
             $statement->execute(['famille_id' => $_SESSION['famille_id']]);
 
@@ -128,11 +128,12 @@ class ModelLien
     {
         try {
             $database = Model::getInstance();
-            $query = "SELECT * FROM `individu` WHERE id!=0 and famille_id=:famille_id";
+            $query = "SELECT * FROM individu WHERE id!=0 and famille_id=:famille_id";
             $statement = $database->prepare($query);
             $statement->execute(['famille_id' => $_SESSION['famille_id']]);
-            $results = $statement->fetchAll(PDO::FETCH_CLASS, "ModelIndividu");
-            return $results;
+
+            $datas_individu = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $datas_individu;
         } catch (PDOException $e) {
             printf("%s - %s<p/>\n", $e->getCode(), $e->getMessage());
             return NULL;
@@ -140,30 +141,33 @@ class ModelLien
     }
 
 
-    public static function insertParent($id_enfant,$id_parent) {
+    public static function insertParent($id_enfant, $id_parent)
+    {
         try {
             $database = Model::getInstance();
 
             // recherche du sexe du parent
-            $query = "select sexe from individu where famille_id = :famille_id and id=:id_parent";
+            $query = "SELECT sexe from individu where famille_id = :famille_id and id=:id_parent";
             $statement = $database->prepare($query);
-            $statement->execute(['id_parent' => $id_parent, 'famille_id' => $_SESSION['famille_id']]);
+            $statement->execute([
+                'id_parent' => $id_parent, 
+                'famille_id' => $_SESSION['famille_id']]);
             $results = $statement->fetchAll(PDO::FETCH_COLUMN, 0);
-            $sexe = $results[0];
+            $sexe = $results[0]; // juste une seule variable dans $sexe (M ou F)
+
             // update du lien de parenté pour l'enfant selon le sexe du parent
-            if ($sexe=='H'){
+            if ($sexe == 'H') {
                 $query = "UPDATE individu SET pere = :id_parent WHERE famille_id = :famille_id AND id = :id_enfant;";
                 $parent = 'pere';
-            }
-            else{
+            } else {
                 $query = "UPDATE individu SET mere = :id_parent WHERE famille_id = :famille_id AND id = :id_enfant;";
                 $parent = 'mere';
-            }            
+            }
             $statement = $database->prepare($query);
             $statement->execute([
                 'id_parent' => $id_parent,
                 'famille_id' => $_SESSION['famille_id'],
-                'id_enfant' => $id_enfant           
+                'id_enfant' => $id_enfant
             ]);
             return $parent;
         } catch (PDOException $e) {
@@ -171,8 +175,9 @@ class ModelLien
             return -1;
         }
     }
-    
-    public static function insertUnion($id_homme,$id_femme, $event_type, $event_date, $event_lieu) {
+
+    public static function insertUnion($id_homme, $id_femme, $event_type, $event_date, $event_lieu)
+    {
         try {
             $database = Model::getInstance();
 
@@ -193,7 +198,7 @@ class ModelLien
                 'iid2' => $id_femme,
                 'event_type' => $event_type,
                 'event_date' => $event_date,
-                'event_lieu' => $event_lieu              
+                'event_lieu' => $event_lieu
             ]);
             return $id;
         } catch (PDOException $e) {

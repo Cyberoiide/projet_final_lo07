@@ -29,9 +29,7 @@ class ControllerEvenement
 
     public static function evenementCreated()
     {
-        $ids = explode('|', $_GET['ids']);
-        // $famille_id = $ids[1];
-        $iid = $ids[0];      // id de l'invividu
+        $iid = $_GET['individu_id'];      // id de l'invividu
         
         $results = ModelEvenement::insert(
             $iid,

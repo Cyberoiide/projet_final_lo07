@@ -27,8 +27,9 @@ class ControllerLien
     }
 
     public static function lienParentCreated() {      
-        $parent = ModelLien::insertParent(htmlspecialchars($_GET['ids_enfant'])
-                ,htmlspecialchars($_GET['ids_parent']));
+        $parent = ModelLien::insertParent(
+            htmlspecialchars($_GET['id_enfant']),
+            htmlspecialchars($_GET['id_parent']));
        
     // ----- Construction chemin de la vue
     include 'config.php';

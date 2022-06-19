@@ -17,7 +17,7 @@ require ($root . '/app/view/fragment/fragmentCaveHeader.html');
      echo("<ul>");
      echo ("<li>famille_id = " . $_SESSION['famille_id'] . "</li>");
      echo ("<li>homme_id = " . $_GET['id_homme'] . "</li>");
-     echo ("<li>homme_id = " . $_GET['id_femme'] . "</li>");
+     echo ("<li>femme_id = " . $_GET['id_femme'] . "</li>");
      /*echo ("<li>event_id = " . $results . "</li>");*/
      echo ("<li>lien_type = " . $_GET['type'] . "</li>");
      echo ("<li>lien_date = " . $_GET['date'] . "</li>");

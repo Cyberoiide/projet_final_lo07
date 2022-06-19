@@ -63,7 +63,7 @@ class ModelFamille
     {
         try {
             $database = Model::getInstance();
-            $query = "select nom from famille";
+            $query = "SELECT nom from famille ORDER by id";
             $statement = $database->prepare($query);
             $statement->execute();
             $results = $statement->fetchAll(PDO::FETCH_COLUMN, 0);

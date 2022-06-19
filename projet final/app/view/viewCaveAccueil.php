@@ -1,6 +1,5 @@
 <!-- ----- debut de la page cave_acceuil -->
 <?php 
-session_start();
 include 'fragment/fragmentCaveHeader.html'; ?>
 
 <body>
