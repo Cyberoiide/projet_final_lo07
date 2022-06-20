@@ -61,10 +61,10 @@ class ControllerIndividu
         require($vue);
     }
 
-    public static function individuAffichage($arg)
+    public static function individuAffichage()
     {
         //Demande de toutes les infos sur l'individu
-        $results = ModelIndividu::getInfoIndividu($arg['individu_id']);
+        $results = ModelIndividu::getInfoIndividu($_GET['individu_id']);
         
         //Construction de la vue page d'un individu
         include 'config.php';

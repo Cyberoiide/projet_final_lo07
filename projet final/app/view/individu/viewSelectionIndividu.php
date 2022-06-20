@@ -30,12 +30,12 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
                 <!-- selection d'un individu -->
                 <label for="individu_id">Sélection d'un individu : </label>
-                <select class="form-control" id='individu_id' name='ids_enfant' style="width: 200px">
+                <select class="form-control" id='individu_id' name='individu_id' style="width: 200px">
                     <?php
 
                     foreach ($datas_individu as $individu) {
-                        // on passe 2 paramètres dans le value de option
-                        echo ("<option value=" .  $individu['id'] . "|" . $individu["famille_id"] . ">" .  $individu['nom'] . " : " . $individu['prenom'] . "</option>");
+                        // on passe l'id de l'individu sélectionné dans le value de option
+                        echo ("<option value=" .  $individu['id'] . ">" .  $individu['nom'] . " : " . $individu['prenom'] . "</option>");
                     }
 
                     ?>
