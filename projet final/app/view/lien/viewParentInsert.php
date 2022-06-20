@@ -12,7 +12,7 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
         ?>
 
         <?php
-        var_dump($results);
+        // var_dump($results);
         ?>
 
 

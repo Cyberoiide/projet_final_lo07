@@ -10,17 +10,10 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
         <?php
         include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
         include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
-        ?>
-
-        <?php
-        // var_dump($results);
-        $datas_individu = $results[0];
-        var_dump($datas_individu);
         
-        //$datas_event = $results[1];
-    // /*     var_dump($datas_event); */
+        
+        $datas_individu = $results[0];
         ?>
-
 
         <!-- FORM START -->
         <form role="form" method='get' action='router2.php'>
@@ -34,12 +27,10 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
                 <label for="individu_id">Sélection d'un individu : </label>
                 <select class="form-control" id='individu_id' name='individu_id' style="width: 400px">
                     <?php
-
                     foreach ($datas_individu as $individu) {
-                        // on passe 2 paramètres dans le value de option
+                        // on passe l'id de l'individu dans le value du option
                         echo ("<option value=" .  $individu['id'] . ">" .  $individu['nom'] . " : " . $individu['prenom'] . "</option>");
                     }
-
                     ?>
                 </select>
 

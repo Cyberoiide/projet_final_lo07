@@ -8,18 +8,14 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 <body>
   <div class="container">
     <?php
-
-    // $_SESSION['nom'] = $_GET['nom'];
-
     include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
     include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
     ?>
-    <!-- ===================================================== -->
-    <?php
-    // var_dump($_GET);
-    // var_dump($_SESSION);
 
-    if ($results) {
+    <!-- ===================================================== -->
+
+    <?php
+    if ($results) { // confirmation d'ajout de famille
       echo ("<h3>La nouvelle famille a été ajoutée </h3>");
       echo ("<ul>");
       echo ("<li>id = " . $results . "</li>");

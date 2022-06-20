@@ -13,10 +13,10 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
         ?>
 
         <?php
-        // var_dump($results);
+        // // var_dump($results);
 
         $datas_individu = $results[0];
-        var_dump($datas_individu);
+        // var_dump($datas_individu);
         ?>
 
 

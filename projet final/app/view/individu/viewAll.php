@@ -14,11 +14,11 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 
     <?php
 
-    // var_dump($results);
+    // // var_dump($results);
 
     // on affiche ici les noms des colonnes
     $cols = $results[0];
-    // var_dump($cols);
+    // // var_dump($cols);
 
     echo '<table class="table table-striped table-bordered">';
     echo '<thead>';
@@ -35,7 +35,7 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
     // maintenant on affiche leur contenu
     echo "<tbody>";
     $datas = $results[1];
-    // var_dump($datas);
+    // // var_dump($datas);
 
     foreach ($datas as $infos) {
       echo ("<tr>");

@@ -12,7 +12,7 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
         <!-- ===================================================== -->
         <?php
 
-        var_dump($results);
+        // var_dump($results);
 
         //Nom de l'individu
         echo ("<h1 style='color:#FF0000'>" . $results['individu']['nom'] . " " . $results['individu']['prenom'] . "</h1>");

@@ -9,7 +9,7 @@ class ControllerGenealogie
         include 'config.php';
         $vue = $root . '/app/view/viewGenealogieAccueil.php';
         if (DEBUG)
-            echo ("ControllerVin : genealogieAccueil : vue = $vue");
+            echo ("ControllerGenealogie : genealogieAccueil : vue = $vue");
         require($vue);
     }
 }

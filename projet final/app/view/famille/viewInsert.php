@@ -14,6 +14,7 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
     include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
     ?>
 
+    <!-- formulaire pour ajouter une famille -->
     <form role="form" method='get' action='router2.php'>
       <div class="form-group">
         <input type="hidden" name='action' value='familleCreated'>

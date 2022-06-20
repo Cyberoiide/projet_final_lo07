@@ -14,11 +14,9 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
     ?>
     <!-- ===================================================== -->
     <?php
-    var_dump($_GET);
-    var_dump($_SESSION);
 
-    // ici results = event_id (juste id quoi)
-    if ($results) {
+    // confirmation ajout d'un évènement
+    if ($results) {   // ici results = event_id (juste id quoi)
       echo ("<h3>Confirmation de la création d'un évènement </h3>");
       echo ("<ul>");
       echo ("<li>famille_id = " . $_SESSION['famille_id'] . "</li>");

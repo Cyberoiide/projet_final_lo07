@@ -11,7 +11,6 @@ if (isset($_SESSION["nom"])) {
 
 <div class="jumbotron">
   <h1><?php echo($val); ?> </h1>
-  <p>C'est la meilleure famille de la région ....</p>
 </div>
 <p />
 <!-- ----- fin fragmentGenealogieJumbotron -->

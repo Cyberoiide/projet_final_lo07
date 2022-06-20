@@ -116,24 +116,18 @@ class ModelEvenement
     }
 
 
-    // retourne la liste de vins et de producteurs
+    // retourne la liste des évènements pour une famille
     public static function getAllIndividuEvent()
     {
         try {
             $database = Model::getInstance();
-            $query_individu = "SELECT * FROM `individu` WHERE id!=0 and famille_id=:famille_id";
-            //$query_event = "select event_type, event_date, event_lieu from evenement";
+            $query_individu = "SELECT * FROM individu WHERE id!=0 and famille_id=:famille_id";
 
             $statement = $database->prepare($query_individu);
             $statement->execute([
                 'famille_id' => $_SESSION['famille_id']
             ]);
             $datas_individu = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-            //$statement1 = $database->prepare($query_event);
-            //$statement1->execute();
-
-            //$datas_event = $statement1->fetchAll(PDO::FETCH_ASSOC);
 
             return array($datas_individu);
         } catch (PDOException $e) {

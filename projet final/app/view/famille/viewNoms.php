@@ -9,7 +9,6 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
     <?php
     include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
     include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
-    var_dump($results);
 
 
     // $results contient un tableau avec la liste des clés.

@@ -60,9 +60,6 @@ switch ($action) {
     ControllerIndividu::$action($args);
     break;
 
-  case 'GenealogiePropAmelioration':
-    ControllerGenealogie::$action($args);
-
     // Tache par défaut
   default:
     $action = "genealogieAccueil";

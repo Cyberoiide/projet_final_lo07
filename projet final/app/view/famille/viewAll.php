@@ -1,8 +1,5 @@
 <!-- ----- début viewAll -->
 <?php
-
-
-
 require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 ?>
 
@@ -23,7 +20,7 @@ require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
       <tbody>
         <!-- <h3>Liste des familles</h3> -->
         <?php
-        // La liste des vins est dans une variable $results 
+        // La liste des famille est dans la variable $results 
         foreach ($results as $element) {
           printf(
             "<tr><td>%d</td><td>%s</td></tr>",

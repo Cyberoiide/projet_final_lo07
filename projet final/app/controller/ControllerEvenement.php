@@ -4,7 +4,7 @@ require_once '../model/ModelEvenement.php';
 
 class ControllerEvenement
 {
-    // --- Liste des rvenements
+    // --- Liste des évènements
     public static function evenementReadAll()
     {
         $results = ModelEvenement::getAll();
@@ -17,7 +17,7 @@ class ControllerEvenement
         require($vue);
     }
 
-    // Récupère tous les vins et producteurs + Affiche le formulaire de creation d'un evenement
+    // Récupère tous les évènement + Affiche le formulaire de creation d'un evenement
     public static function evenementCreate()
     {
         $results = ModelEvenement::getAllIndividuEvent();

@@ -11,7 +11,7 @@ require ($root . '/app/view/fragment/fragmentGenealogieHeader.html');
       include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
       include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
 
-      // var_dump($results);
+      // // var_dump($results);
     ?> 
 
     <form role="form" method='get' action='router2.php'>
