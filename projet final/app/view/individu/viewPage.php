@@ -1,43 +1,40 @@
 <!-- ----- début viewInserted -->
 <?php
-require($root . '/app/view/fragment/fragmentCaveHeader.html');
+require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 ?>
 
 <body>
     <div class="container">
         <?php
-        include $root . '/app/view/fragment/fragmentCaveMenu.html';
-        include $root . '/app/view/fragment/fragmentCaveJumbotron.php';
+        include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
+        include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
         ?>
         <!-- ===================================================== -->
         <?php
 
         var_dump($results);
-        
+
         //Nom de l'individu
         echo ("<h1 style='color:#FF0000'>" . $results['individu']['nom'] . " " . $results['individu']['prenom'] . "</h1>");
 
 
         //Naissance et déces
-        echo ("<ul>");
-        echo ("<li>Né le ");
-        echo ($results['evenement']['NAISSANCE']['event_date']);
-        echo (' à ');
-        echo ($results['evenement']['NAISSANCE']['event_lieu'] . "</li>");
-        echo ("<li>Décédé le ");
-        echo ($results['evenement']['DECES']['event_date']);
-        echo (' à ');
-        echo ($results['evenement']['DECES']['event_lieu'] . "</li></ul>");
-
+        printf(
+            "<ul><li>Né le %s à %s</li><li>Décédé le %s à %s</li></ul>",
+            $results['evenement']['NAISSANCE']['event_date'],
+            $results['evenement']['NAISSANCE']['event_lieu'],
+            $results['evenement']['DECES']['event_date'],
+            $results['evenement']['DECES']['event_lieu']
+        );
 
         //Parents de l'individu
-        echo ("<h2>Parents</h2>");
-        echo ("<ul>");
-        if ($results['individu']['pere'] == 0)
+        echo ("<h2>Parents</h2><ul>");
+
+        if ($results['individu']['pere'] == 0) // si il existe pas, afficher ?
             echo ("<li>Père ?</li>");
         else
             echo ("<li>Père <a href='router2.php?action=individuAffichage&individu_id=" . $results['individu']['pere'] . "'>" . $results['individu']['pere_nom'] . " " . $results['individu']['pere_prenom'] . "</a></li>");
-        if ($results['individu']['mere'] == 0)
+        if ($results['individu']['mere'] == 0) // si elle n'existe pas, afficher ?
             echo ("<li>Mère ?</li>");
         else
             echo ("<li>Mère <a href='router2.php?action=individuAffichage&individu_id=" . $results['individu']['mere'] . "'>" . $results['individu']['mere_nom'] . " " . $results['individu']['mere_prenom'] . "</a></li>");
@@ -59,6 +56,6 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
         echo ("</ul>");
 
 
-        include $root . '/app/view/fragment/fragmentCaveFooter.html';
+        include $root . '/app/view/fragment/fragmentGenealogieFooter.html';
         ?>
         <!-- ----- fin viewInserted -->

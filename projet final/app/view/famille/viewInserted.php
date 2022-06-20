@@ -2,7 +2,7 @@
 <?php
 
 
-require($root . '/app/view/fragment/fragmentCaveHeader.html');
+require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 ?>
 
 <body>
@@ -11,8 +11,8 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
     // $_SESSION['nom'] = $_GET['nom'];
 
-    include $root . '/app/view/fragment/fragmentCaveMenu.html';
-    include $root . '/app/view/fragment/fragmentCaveJumbotron.php';
+    include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
+    include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
     ?>
     <!-- ===================================================== -->
     <?php
@@ -32,6 +32,6 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
     echo ("</div>");
 
-    include $root . '/app/view/fragment/fragmentCaveFooter.html';
+    include $root . '/app/view/fragment/fragmentGenealogieFooter.html';
     ?>
     <!-- ----- fin viewInserted -->

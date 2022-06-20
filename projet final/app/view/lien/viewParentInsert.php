@@ -1,14 +1,14 @@
 <!-- ----- début viewInsert -->
 
 <?php
-require($root . '/app/view/fragment/fragmentCaveHeader.html');
+require($root . '/app/view/fragment/fragmentGenealogieHeader.html');
 ?>
 
 <body>
     <div class="container">
         <?php
-        include $root . '/app/view/fragment/fragmentCaveMenu.html';
-        include $root . '/app/view/fragment/fragmentCaveJumbotron.php';
+        include $root . '/app/view/fragment/fragmentGenealogieMenu.html';
+        include $root . '/app/view/fragment/fragmentGenealogieJumbotron.php';
         ?>
 
         <?php
@@ -63,6 +63,6 @@ require($root . '/app/view/fragment/fragmentCaveHeader.html');
 
 
     </div>
-    <?php include $root . '/app/view/fragment/fragmentCaveFooter.html'; ?>
+    <?php include $root . '/app/view/fragment/fragmentGenealogieFooter.html'; ?>
 
     <!-- ----- fin viewInsert -->

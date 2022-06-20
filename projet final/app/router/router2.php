@@ -3,7 +3,7 @@
 
 if (empty($_SESSION['nom']))
     session_start();
-require('../controller/ControllerCave.php');
+require('../controller/ControllerGenealogie.php');
 require('../controller/ControllerFamille.php');
 require('../controller/ControllerEvenement.php');
 require('../controller/ControllerLien.php');
@@ -60,13 +60,13 @@ switch ($action) {
     ControllerIndividu::$action($args);
     break;
 
-  case 'CavePropAmelioration':
-    ControllerCave::$action($args);
+  case 'GenealogiePropAmelioration':
+    ControllerGenealogie::$action($args);
 
     // Tache par défaut
   default:
-    $action = "caveAccueil";
-    ControllerCave::$action($args);
+    $action = "genealogieAccueil";
+    ControllerGenealogie::$action($args);
 }
 ?>
 <!-- ----- Fin Router1 -->
